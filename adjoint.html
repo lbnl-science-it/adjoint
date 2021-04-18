@@ -227,6 +227,58 @@ mapbox tin117
 	  /*font-family: Arial, sans-serif;*/
 	}
 
+    /* ********************************************************************
+        css3 tooltip popup to display help text 
+        ref https://www.w3schools.com/howto/howto_css_tooltip.asp 
+        tooltip arrow, but can't quite get right pointing arrow to work: https://www.w3schools.com/css/css_tooltip.asp 
+        ******************************************************************* 
+    */
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      /*border-bottom: 1px dotted black;*/
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 220%; /*240px;*/
+      background-color: #555;
+      color: #fff;
+      text-align:    left;
+      border-radius: 6px;
+      padding: 5px 5px;
+      position: absolute;
+      z-index: 1;
+      top:     120%;  /* tooltip appears on bottom of div space */
+      left:    0%;      
+      margin-left: 4px;
+      opacity: 0;
+      transition: opacity 0.3s;  /* fade animation */
+      font-family: Arial, sans-serif;
+      font-size: 12pt; /* inputbar used 20 pixel font*/
+    }
+
+    /* Tooltip arrow */
+    /* cant get arrow to point correctly, so not using 
+    .tooltip .tooltiptext::after {
+      content: " ";
+      position: absolute;
+      bottom:  100%;    
+      left:     50%;
+      border-width:  5px;  /* width of arrow * /
+      margin-top:   -5px;   
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+    }
+    */
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+
 
     </style>
 </head>
@@ -260,8 +312,8 @@ mapbox tin117
     <div id="attribution2+inputbar" class="attrib2_input_Css">
         <!-- had to add an extra css to hold this -->
 		<div id="attribution2"> <!-- class="attributionCss"> -->
-            <A HREF="https://github.com/lbnl-science-it/adjoint">Adjoint</A>.  An app from the collaboration of Sustainable Energy System and Scientific Computing, LBNL.  
-            © 2021 Tin Ho, Ling Jin, Yuhan Wang, Tyler Huntington, Corinne Scown.
+            <A HREF="https://github.com/lbnl-science-it/adjoint">Adjoint</A>:  An app from the collaboration of Sustainable Energy System and Scientific Computing, LBNL.  
+            <A HREF="https://github.com/lbnl-science-it/adjoint/blob/main/LICENSE">©</A> 2021 Tin Ho, Ling Jin, Yuhan Wang, Tyler Huntington, Corinne Scown.
 		</div>
 
 
@@ -273,41 +325,68 @@ mapbox tin117
 			<BUTTON id="ShowCalculator">Show Calculator</BUTTON>
 		-->
             <!--html element for drop down picker goes here-->
-			<!-- 1st data set for adjoin is DAC-topo3JulNOxSpAl.geojson -->
-			<!-- 2nd data set for adjoin is DAC-topo307AVOCSpAl.geojson -->
+			<!-- 1st data set for adjoint is dacsjvnew*.geojson -->
+			<!-- 2nd data set for adjoint is o3gt70sjv*.geojson -->
+			<div class="tooltip">
             <select id="receptorSelectorUI"> <!-- site -->  <!--to emulate Tyler <select id="polygon-layer-selector"> -->
                 <option value="NA"        disabled           >Impact Metric</option>	       
                 <option value="dacsjvnew" selected='selected'>DAC burden</option>	
                 <option value="o3gt70sjv"                    >Ozone Exceedance</option>	
             </select>
+            <!-- css3 hoover will display tooltip as popup -->
+            <span class="tooltiptext">
+                <U>Impact Metric</U><BR>
+                • Odd oxygen in Dis-Advantaged Community<BR>
+                • Areas where 0₃ > 70 ppb<BR>
+            </span>
+            </div>
 
 			<!-- Pollutant Type / Precursor, formerly sourceSelectorUI -->
+			<div class="tooltip">
             <select id="precursorSelectorUI">
                 <option value="NA" disabled >Ozone Precursor</option>	       
                 <option value="NOx">NOx</option>
                 <option value="AVOC">AVOC</option>
-           </select>
+            </select>
+            <span class="tooltiptext">
+                <U>Ozone Precursor</U><BR>
+                • NOx: Nitrous oxides<BR>
+                • AVOC: Anthropogenic Volatic Organic Compound<BR>
+            </span>
+            </div>
 
 
 			<!-- Meteorological Episode, formerly seasonSelectorUI -->
+			<div class="tooltip">
             <select id="episodeSelectorUI">
                 <option value="NA"  disabled >Episode</option>	       
 				<option value="07" selected="selected">Jul</option><!-- value="209" -->
                 <option value="08">Aug</option>
                 <option value="09">Sep</option>
                 <option value="Mx">Max(Jul-Sep)</option>
-             </select>
+            </select>
+            <span class="tooltiptext">
+                <U>Meteorological Episode</U><BR>
+                Max is for months of Jul to Sep<BR>
+            </span>
+            </div>
 
 			<!-- hour mixing, same name as before -->
+			<div class="tooltip">
             <select id="hourSelectorUI"> <!--mixing depends on time of day-->
                 <option value="NA" disabled >Emission Time</option>	       
                 <option value="All" selected='selected'>Whole day</option>         <!--aka All Day-->
                 <option value="Day"                    >Day   (7am-7pm)</option>   <!--formerly Hi-->
                 <option value="Nit"                    >Night (7pm-7am)</option>   <!--formerly Lo-->
             </select>
+            <span class="tooltiptext">
+                Pollutant mixing hours<BR>
+            </span>
+            </div>
 
-			<select id="exaggerationSelectorUI">
-				<option value="NA" disabled>Terrain Elevation Dramatization</option>	       
+			<div class="tooltip">
+            <select id="exaggerationSelectorUI">
+				<option value="NA" disabled>Terrain Dramatization</option>	       
 				<option value="0"                     > 0</option>
 				<option value="1"                     > 1x</option>
 				<option value="2"                     > 2x</option>
@@ -320,6 +399,16 @@ mapbox tin117
 				<option value="9"                     > 9x</option>
 				<option value="10"                    >10x</option>
 			</select>
+            <!-- css3 hoover will display tooltip as popup -->
+            <span class="tooltiptext">
+                <U>Terrain Elevation Exaggeration</U><BR>
+                <I>Ctrl + mouse drag on map: change pitch</I><BR>
+                0x = flat map<BR>
+                1x = 1:1 scale for elevation<BR>
+                4x = Dramatize elevation by 400%<BR>    
+                8x = Dramatize elevation by 800%<BR>    
+            </span>
+            </div>
 
 		    <!-- Sensitivity Type (new) [js will set style to hidden on this later in the code] -->
 		    <!-- while hidden, it still squad the space, thus exaggerationSelector code placed above -->
@@ -1111,7 +1200,7 @@ map.on('mousemove', function (e) {
            // display ozone measurements (formerly odor OU value) in a "meter reading box"
 		   // adjoint sample data line in gson is (max is same as val, just placed there for backward compat w/ smelly) : 
 		   // {"val": 4.85951553378072e-10, "color": 4.85951553378, "mantissa": 0.5217865073, "exponent": -30, "max": 4.85951553378072e-10 }
-           ouVal = features[0].properties.val     ;   // adjoin O3, Yuhan header comment is value, but my gson coded it as max, so no change should be needed
+           ouVal = features[0].properties.val     ;   // adjoin O₃, Yuhan header comment is value, but my gson coded it as max, so no change should be needed
            //ouVal = features[0].properties.max   ;   // odor  
            //ouVal = features[0].properties.exponent   ;   // adjoin, should eventually try color which has a shifted value (offset by 1e10 or so) 
 		   // adjoin use 'val', try color(weight), color(rgb), mantissa, exponent ++
