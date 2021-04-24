@@ -9,7 +9,7 @@ mapbox tin117
 -->
 <head>
     <meta charset='utf-8' />
-    <title>Adjoint - Sustainable Energy System & Scientific Computing Collaboration (t6@04173d)</title>
+    <title>Adjoint - Sustainable Energy System & Scientific Computing Collaboration (t6@0417)</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css' rel='stylesheet' />
@@ -227,58 +227,6 @@ mapbox tin117
 	  /*font-family: Arial, sans-serif;*/
 	}
 
-    /* ********************************************************************
-        css3 tooltip popup to display help text 
-        ref https://www.w3schools.com/howto/howto_css_tooltip.asp 
-        tooltip arrow, but can't quite get right pointing arrow to work: https://www.w3schools.com/css/css_tooltip.asp 
-        ******************************************************************* 
-    */
-
-    .tooltip {
-      position: relative;
-      display: inline-block;
-      /*border-bottom: 1px dotted black;*/
-    }
-
-    .tooltip .tooltiptext {
-      visibility: hidden;
-      width: 220%; /*240px;*/
-      background-color: #555;
-      color: #fff;
-      text-align:    left;
-      border-radius: 6px;
-      padding: 5px 5px;
-      position: absolute;
-      z-index: 1;
-      top:     120%;  /* tooltip appears on bottom of div space */
-      left:    0%;      
-      margin-left: 4px;
-      opacity: 0;
-      transition: opacity 0.3s;  /* fade animation */
-      font-family: Arial, sans-serif;
-      font-size: 12pt; /* inputbar used 20 pixel font*/
-    }
-
-    /* Tooltip arrow */
-    /* cant get arrow to point correctly, so not using 
-    .tooltip .tooltiptext::after {
-      content: " ";
-      position: absolute;
-      bottom:  100%;    
-      left:     50%;
-      border-width:  5px;  /* width of arrow * /
-      margin-top:   -5px;   
-      border-style: solid;
-      border-color: #555 transparent transparent transparent;
-    }
-    */
-
-    .tooltip:hover .tooltiptext {
-      visibility: visible;
-      opacity: 1;
-      transition: opacity 0.3s;
-    }
-
 
     </style>
 </head>
@@ -289,7 +237,7 @@ mapbox tin117
 <!-- ################################################################# -->
 <!-- ################################################################# -->
 
-
+<!--body onpageshow="hideSensitivitySelectorUI(this)"  dont work 2021.04-->
 <body> 
 
 <!-- Tyler had a navbar at top, having some menu, just trying to be closer to his model, i dont plan to have anything here  -->
@@ -312,8 +260,8 @@ mapbox tin117
     <div id="attribution2+inputbar" class="attrib2_input_Css">
         <!-- had to add an extra css to hold this -->
 		<div id="attribution2"> <!-- class="attributionCss"> -->
-            <A HREF="https://github.com/lbnl-science-it/adjoint">Adjoint</A>:  An app from the collaboration of Sustainable Energy System and Scientific Computing, LBNL.  
-            <A HREF="https://github.com/lbnl-science-it/adjoint/blob/main/LICENSE">©</A> 2021 Tin Ho, Ling Jin, Yuhan Wang, Tyler Huntington, Corinne Scown.
+            <A HREF="https://github.com/lbnl-science-it/adjoint">Adjoint</A>.  An app from the collaboration of Sustainable Energy System and Scientific Computing, LBNL.  
+            © 2021 Tin Ho, Ling Jin, Yuhan Wang, Tyler Huntington, Corinne Scown.
 		</div>
 
 
@@ -323,95 +271,42 @@ mapbox tin117
             calculator should be done, at least on smelly (unless this was not the latest code)
             button can perhaps be repurposed for help/info "pop up" in the future
 			<BUTTON id="ShowCalculator">Show Calculator</BUTTON>
-		-->
+	-->
             <!--html element for drop down picker goes here-->
-			<!-- 1st data set for adjoint is dacsjvnew*.geojson -->
-			<!-- 2nd data set for adjoint is o3gt70sjv*.geojson -->
-			<div class="tooltip">
+			<!-- 1st data set for adjoin is DAC-topo3JulNOxSpAl.geojson -->
+			<!-- 2nd data set for adjoin is DAC-topo307AVOCSpAl.geojson -->
             <select id="receptorSelectorUI"> <!-- site -->  <!--to emulate Tyler <select id="polygon-layer-selector"> -->
                 <option value="NA"        disabled           >Impact Metric</option>	       
                 <option value="dacsjvnew" selected='selected'>DAC burden</option>	
                 <option value="o3gt70sjv"                    >Ozone Exceedance</option>	
             </select>
-            <!-- css3 hoover will display tooltip as popup -->
-            <span class="tooltiptext">
-                <U>Impact Metric</U><BR>
-                • Odd oxygen in Dis-Advantaged Community<BR>
-                • Areas where 0₃ > 70 ppb<BR>
-            </span>
-            </div>
 
 			<!-- Pollutant Type / Precursor, formerly sourceSelectorUI -->
-			<div class="tooltip">
             <select id="precursorSelectorUI">
                 <option value="NA" disabled >Ozone Precursor</option>	       
                 <option value="NOx">NOx</option>
                 <option value="AVOC">AVOC</option>
-            </select>
-            <span class="tooltiptext">
-                <U>Ozone Precursor</U><BR>
-                • NOx: Nitrous oxides<BR>
-                • AVOC: Anthropogenic Volatic Organic Compound<BR>
-            </span>
-            </div>
+           </select>
 
 
 			<!-- Meteorological Episode, formerly seasonSelectorUI -->
-			<div class="tooltip">
             <select id="episodeSelectorUI">
                 <option value="NA"  disabled >Episode</option>	       
 				<option value="07" selected="selected">Jul</option><!-- value="209" -->
                 <option value="08">Aug</option>
                 <option value="09">Sep</option>
                 <option value="Mx">Max(Jul-Sep)</option>
-            </select>
-            <span class="tooltiptext">
-                <U>Meteorological Episode</U><BR>
-                Max is for months of Jul to Sep<BR>
-            </span>
-            </div>
+             </select>
 
 			<!-- hour mixing, same name as before -->
-			<div class="tooltip">
             <select id="hourSelectorUI"> <!--mixing depends on time of day-->
                 <option value="NA" disabled >Emission Time</option>	       
                 <option value="All" selected='selected'>Whole day</option>         <!--aka All Day-->
                 <option value="Day"                    >Day   (7am-7pm)</option>   <!--formerly Hi-->
                 <option value="Nit"                    >Night (7pm-7am)</option>   <!--formerly Lo-->
             </select>
-            <span class="tooltiptext">
-                Pollutant mixing hours<BR>
-            </span>
-            </div>
-
-			<div class="tooltip">
-            <select id="exaggerationSelectorUI">
-				<option value="NA" disabled>Terrain Dramatization</option>	       
-				<option value="0"                     > 0</option>
-				<option value="1"                     > 1x</option>
-				<option value="2"                     > 2x</option>
-				<option value="3"                     > 3x</option>
-				<option value="4" selected='selected' > 4x</option>
-				<option value="5"                     > 5x</option>
-				<option value="6"                     > 6x</option>
-				<option value="7"                     > 7x</option>
-				<option value="8"                     > 8x</option>
-				<option value="9"                     > 9x</option>
-				<option value="10"                    >10x</option>
-			</select>
-            <!-- css3 hoover will display tooltip as popup -->
-            <span class="tooltiptext">
-                <U>Terrain Elevation Exaggeration</U><BR>
-                <I>Ctrl + mouse drag on map: change pitch</I><BR>
-                0x = flat map<BR>
-                1x = 1:1 scale for elevation<BR>
-                4x = Dramatize elevation by 400%<BR>    
-                8x = Dramatize elevation by 800%<BR>    
-            </span>
-            </div>
 
 		    <!-- Sensitivity Type (new) [js will set style to hidden on this later in the code] -->
-		    <!-- while hidden, it still squad the space, thus exaggerationSelector code placed above -->
             <select id="sensitivitySelectorUI"> 
                 <option value="NA" disabled >Sensitivity</option>	       
                 <option value="Sp">S+</option>
@@ -424,7 +319,6 @@ mapbox tin117
                 <option value="10x" selected='selected' ></option>
             </select>
 			-->
-
 
         </div><!-- end for inputbar -->
     </div><!-- end for "attribution2+inputbar"-->
@@ -765,7 +659,6 @@ var currentSite = "";
 var mapboxUser = "tin117";
 // below are mostly for debuging use
 var getInputSelectorCounter = 0;
-var getExaggerationInputCounter = 0; // little to no dbg use 
 var addLayerCounter = 0;
 var addSourceCounter = 0;
 var rmLayerCounter = 0;
@@ -787,14 +680,13 @@ var map = new mapboxgl.Map({
     //style: 'mapbox://styles/mapbox/dark-v9',		// alt basemap style
     //style: 'mapbox://styles/sn50/cjq8j89hqavyu2sqs3kctxqjj', 	// cali terrain, probably just the base layer map from mapbox.  used in early caair_zwedc
     //style: 'mapbox://styles/sn50/cjrd1zmyy1kds2tp6k4az7apr',    // sites_info_polyg  with satellite street as base layer, too many colors, dont show data well.
-    //~~style: 'mapbox://styles/tin117/cknkrvdub0tx317pngcn1g0k2',   // tin117: Satellite-Streets-3D (default style just enabled 3D in terrain) 2011.04 
     // #### wtf? mapboxstyles change here!
     //style: 'mapbox://styles/sn50/cjreie0fs4o0m2sqghg3ukiqn', 	// sites_info_pt_ctr with cali terrain     as base layer .  pt in center is pretty small, no need for TopLeft position.
     //style: 'mapbox://styles/sn50/cjrekq65d4o7o2slw5x262rb0',	// sites_info_polyg  + sites_info_pt_topLeft  with cali terrain.  corner point turns out to be bottom left, but whatever. 
     //style: 'mapbox://styles/tin117/ck5lywqlj46ab1ipixfayzju6', // 2020.0119 tin117 Basic (light)
-    //++style: 'mapbox://styles/tin117/ck5un3c7t00wy1in3rn7v33ak',   // tin117: outdoor-NoLandUse (and off hill shades, to make it very uniform light background)  
-    style: 'mapbox://styles/tin117/cknkrnz1j0trc17pnvk0rt0k0',   // tin117: Outdoors-Terrain-HillShade-3D (customized color so greenspace is more of dirt color.  grey rock may have been ok but not tried
-    //--style: 'mapbox://styles/tin117/cknkxbc9z1fbm17k6bxe1ofa2', // tin117: Outdoors-3D (default style just enabled 3D in terrain) 2011.04   dramatic terrain create cool effect, but the color overlap with existing legend gradient
+    style: 'mapbox://styles/tin117/ck5un3c7t00wy1in3rn7v33ak',   // tin117: outdoor-NoLandUse (and off hill shades, to make it very uniform light background)  
+
+    
    
     // https://docs.mapbox.com/mapbox-gl-js/api/#attributioncontrol, but see the top part on options.attributionControl 
     // these are all options for the map object 
@@ -802,9 +694,8 @@ var map = new mapboxgl.Map({
     hash: true,     // change URL with a hash of map zoom/lat/long    eg append: #15/37.434/-121.945   # notice it is lat/long in this url!!  so it is zoom/y/x
 
     //zoom: 13,
-    //center: [-119.7871, 36.7378],    // Fresno W, N
-    center: [-119.8629, 33.0007],      // fresno + hwy99 from URL #8.57/37.0007/-119.8629/0/63 
-    //+center: [-120.15, 36.85],       // average LngLat of box StaRosa_Baker  
+    //center: [-119.7871, 36.7378],  // Fresno W, N
+    center: [-120.15, 36.85],        // average LngLat of box StaRosa_Baker
     //center: [-122.447303, 37.753574]   SF
     //center: [-121.945, 37.434],  // alviso ZWEDC
     //center: [-121.5240213, 36.9481043],  // Gilroy Z Best Products
@@ -819,10 +710,9 @@ var map = new mapboxgl.Map({
     //zoom: 10 		// 3mi scale bar.  Fresno-Kingsburg vicinity, with some data from previous project visible.
     //zoom: 10  	// circle filled point data is said to be z0-z10, 10+ will "appear simplified"  
     //zoom: 9  		// see most of BAAQMD   // 5mi 
-    zoom: 8.6		// 10mi scale, good for 3D focus into Fresno + surrounding
     //zoom: 8		// site-info as polygon said to be good at z0-z8.  8+ will "appear simplified"
-    //++zoom: 6.5 	//30mi  ## good for adjoint 2020 POC overview map 
-    //zoom: 6.2 		//??mi  ## good for adjoint 2021.04 StaRosa to Bakersfield overview map 
+    //zoom: 6.5 	//30mi  ## good for adjoint 2020 POC overview map 
+    zoom: 6.2 		//??mi  ## good for adjoint 2021.04 StaRosa to Bakersfield overview map 
     //zoom: 6.1 	// see most of CA  	// 50mi    
     //zoom: 5.5		// see whole CA
     
@@ -876,16 +766,6 @@ function styleScaleLegendOpacity(attribute) {
     ]
 };
 
-function getExaggerationInputSelection() {
-        console.log( "--dbg-- getExaggerationInputSelection() begin" );
-        getExaggerationInputCounter++;
-        exaggerationInputSelection  = document.getElementById("exaggerationSelectorUI").value;
-		console.log( "--dbg-- getExaggerationInputSelection() about to set Dramatization to " + exaggerationInputSelection );
-		// https://docs.mapbox.com/mapbox-gl-js/api/map/#map#setterrain
-		// get source name from console map.getTerrain()
-		map.setTerrain({ 'source': "mapbox://mapbox.mapbox-terrain-dem-v1", 'exaggeration': Number(exaggerationInputSelection)});
-        console.log( "--dbg-- getExaggerationInputSelection() end" );
-}
 
 // find out what combination is selected in the form selections UI ... eventually trigger loading maplayer...   
 // depending on combination, unload and load new layer data, then update map.  no need to do new map
@@ -1135,8 +1015,8 @@ map.on('load', function () {
         }
     });
     //map.style.sourceCaches['attribution-layer']._source.attribution = "Adjoint. An app from the collaboration of SESG & SCG, LBNL. © 2020 Tin Ho, Ling Jin, Yuhan Wang, Tyler Huntington, Corinne Scown";
-    //--map.style.sourceCaches['attribution-layer']._source.attribution =  '<A HREF="https://github.com/lbnl-science-it/adjoint">Adjoint</A>';
-    //-- above actually throwing error in browser console for gl-js v2.2.0, not useful, disabling.
+    //--map.style.sourceCaches['attribution-layer']._source.attribution =  '<A HREF="https://github.com/lbnl-science-it/adjoint">Adjoint</A>';  //-- break map chaning in gl-js 2.2.0
+
 
 
     // ################################################ //
@@ -1167,15 +1047,6 @@ map.on('load', function () {
         getInputFormSelection();
     });
     
-	// ################################################ //
-	// #### add handler for terrain exaggeration form selector // adjoint 3D
-	var exaggerationInputSelection = "";
-	var exa_selector = document.getElementById("exaggerationSelectorUI");
-	exa_selector.addEventListener('change',function function_name(e) {
-		getExaggerationInputSelection();
-	});
-
-
     dbgTracer += " map_on_load_END \t";
     console.log(dbgTracer);
 });  // end map.on('load'...) 
@@ -1200,7 +1071,7 @@ map.on('mousemove', function (e) {
            // display ozone measurements (formerly odor OU value) in a "meter reading box"
 		   // adjoint sample data line in gson is (max is same as val, just placed there for backward compat w/ smelly) : 
 		   // {"val": 4.85951553378072e-10, "color": 4.85951553378, "mantissa": 0.5217865073, "exponent": -30, "max": 4.85951553378072e-10 }
-           ouVal = features[0].properties.val     ;   // adjoin O₃, Yuhan header comment is value, but my gson coded it as max, so no change should be needed
+           ouVal = features[0].properties.val     ;   // adjoin O3, Yuhan header comment is value, but my gson coded it as max, so no change should be needed
            //ouVal = features[0].properties.max   ;   // odor  
            //ouVal = features[0].properties.exponent   ;   // adjoin, should eventually try color which has a shifted value (offset by 1e10 or so) 
 		   // adjoin use 'val', try color(weight), color(rgb), mantissa, exponent ++
@@ -1248,8 +1119,7 @@ map.on('mousemove', function (e) {
 // https://www.mapbox.com/mapbox-gl-js/api/#navigationcontrol
 //var nav = new mapboxgl.NavigationControl();
 //map.addControl(nav, 'top-left');
-//map.addControl( new mapboxgl.NavigationControl(), 'top-right');  
-map.addControl( new mapboxgl.NavigationControl({visualizePitch: true}), 'top-right');   // work but pitching compass doesnt do any good now, may change in future?
+map.addControl( new mapboxgl.NavigationControl(), 'top-right');  
 
 map.addControl(new mapboxgl.FullscreenControl({container: document.querySelector('body')}));
 
@@ -1271,12 +1141,6 @@ map.addControl(scale);
 // https://www.mapbox.com/mapbox-gl-js/api/#keyboardhandler#enable  but dont seems to do anything in chrome :(
 map.keyboard.enable();
 
-    
-// for 3D topology -- https://docs.mapbox.com/mapbox-gl-js/api/map/#map#setpitch
-map.setPitch(60);    
-
-
-    
 
 // ################################################################################# //
 // ################################################################################# //
