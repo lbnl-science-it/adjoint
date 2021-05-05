@@ -9,6 +9,9 @@ Adjoint
 An app from the collaboration of Sustainable Energy System and Scientific Computing, LBNL:
 Tin Ho, Ling Jin, Yuhan Wang, Tyler Huntington, Corinne Scown
 
+For further infor, please see
+`About <http://adjoint.lbl.gov/About.html>`_ 
+
 © 2021, see LICENSE
 
 Proof of Concept.  Data are for demo purpose only.  
@@ -28,7 +31,8 @@ use Ctrl + mouse drag to change pitch
 About
 =====
 
-See `About<https://adjoint.lbl.gov/About.html>`_ for further info about this web app.
+See https://adjoint.lbl.gov/About.html 
+for further info about this web app.
 
 Contact: tin (at) lbl.gov  or ljin (at) lbl.gov
 
